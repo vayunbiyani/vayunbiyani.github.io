@@ -1,0 +1,34 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>XSS Vulnerable Page</title>
+</head>
+<body>
+
+<h1>XSS Vulnerable Page</h1>
+
+<!-- Vulnerable input field -->
+<form action="/submit" method="post">
+    <label for="inputData">Enter Data:</label><br>
+    <input type="text" id="inputData" name="inputData"><br><br>
+    <input type="submit" value="Submit">
+</form>
+
+<!-- Displaying submitted data (unsafe, vulnerable to XSS) -->
+<div id="displayData">
+    <!-- Data from input will be displayed here -->
+</div>
+
+<script>
+// Simulate displaying submitted data (vulnerable to XSS)
+const displayData = document.getElementById('displayData');
+const urlParams = new URLSearchParams(window.location.search);
+const inputData = urlParams.get('inputData');
+
+// Directly injecting the input data into the DOM (unsafe)
+displayData.innerHTML = `<p>You submitted: ${inputData}</p>`;
+</script>
+
+</body>
+</html>
